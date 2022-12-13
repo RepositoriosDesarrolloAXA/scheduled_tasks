@@ -39,10 +39,10 @@ if($resultado_cantidad > 0){
                 $y=0;
 
                 $internal_id                = $data[$a]["values"]["internalid"][$y]["text"];
-                $nombre_kit                 = $data[$a]["values"]["itemid"];
+                $nombre_kit                 = str_replace("'", "", $data[$a]["values"]["itemid"]);
                 $linea                      = $data[$a]["values"]["custitem_nso_axa_field_item_linea"];
                 $codigo_barras              = $data[$a]["values"]["memberItem.upccode"];
-                $laboratorio                = $data[$a]["values"]["department"][$y]["text"];
+                $laboratorio                = empty($data[$a]["values"]["department"]) ? : $data[$a]["values"]["department"][$y]["text"];
                 $descripcion                = $data[$a]["values"]["salesdescription"];
                 $member_item                = $data[$a]["values"]["memberitem"][$y]["text"];
 
