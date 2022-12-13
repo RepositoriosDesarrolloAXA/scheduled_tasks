@@ -59,7 +59,7 @@ if($resultado_cantidad > 0){
                 $sub_categoria              = $data[$a]["values"]["item.custitem_nso_axa_field_item_subcat"][$y]["text"];
                 $precio                     = $data[$a]["values"]["fxrate"];
                 $subtotal                   = $data[$a]["values"]["amount"];
-                $descuento                  = $data[$a]["values"]["discountamount"];
+                $descuento                  = empty($data[$a]["values"]["discountamount"]) ? 0 : $data[$a]["values"]["discountamount"];
                 $porcentaje_iva             = $data[$a]["values"]["item.custitem_ks_tarifa_de_iva"][$y]["text"];
                 $total_iva                  = $data[$a]["values"]["taxamount"];
                 $type                       = empty($data[$a]["values"]["item.type"]) ? '' : $data[$a]["values"]["item.type"][$y]["text"];
