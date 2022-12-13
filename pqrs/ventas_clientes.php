@@ -59,7 +59,7 @@ if($resultado_cantidad > 0){
                 $nit_caeventa                                   = $data[$a]["values"]["CUSTBODY_AXA_CAMP_VENDE_WF.custentity_nslc_num_identificacion"];
                 $caeventa                                       = str_replace("'", "", $data[$a]["values"]["custbody_axa_camp_vende_wf"][$y]["text"]);
                 $origen                                         = empty($data[$a]["values"]["source"]) ? '' : $data[$a]["values"]["source"][$y]["text"];
-                $tipo_origen                                    = $data[$a]["values"]["custbody_nso_ov_type"][$y]["text"];
+                $tipo_origen                                    = empty($data[$a]["values"]["custbody_nso_ov_type"]) ? '' : $data[$a]["values"]["custbody_nso_ov_type"][$y]["text"];
                 $periodo                                        = $data[$a]["values"]["postingperiod"][$y]["text"];
                 $fecha                                          = $data[$a]["values"]["trandate"];
                 $codigo_barras_item                             = $data[$a]["values"]["item.upccode"];
@@ -73,7 +73,7 @@ if($resultado_cantidad > 0){
                 $valor_total_con_descuento_sin_iva_item         = empty($data[$a]["values"]["formulacurrency"]) ? 0 : $data[$a]["values"]["formulacurrency"];
                 $subcategoria_l                                 = $data[$a]["values"]["item.custitem_nso_axa_field_item_categoria"][$y]["text"];
                 $subcategoria_ll                                = $data[$a]["values"]["item.custitem_nso_axa_field_item_subcat"][$y]["text"];
-                $subcategoria_lll                               = $data[$a]["values"]["item.custitem_nso_axa_field_item_grupo"][$y]["text"];
+                $subcategoria_lll                               = empty($data[$a]["values"]["item.custitem_nso_axa_field_item_grupo"]) ? '' : $data[$a]["values"]["item.custitem_nso_axa_field_item_grupo"][$y]["text"];
 
                 //guardando cabeceras
                 if(!empty($internal_id)){
