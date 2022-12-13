@@ -23,6 +23,7 @@ if($resultado_cantidad > 0){
     $cantidad_busqueda = 0;
 
     $cantidad_dividir = round($resultado_cantidad / 1000);
+    print($cantidad_dividir."<br>");
     for ($i=0; $i < $cantidad_dividir ; $i++) {
 
         $start = ($i == 0) ? 0 : $start + 1000;
