@@ -16,7 +16,7 @@ $resultado_cantidad = conexion_netsuite(2097, 'customsearch_axa_kits_ecom_3', 0,
 if($resultado_cantidad > 0){
 
     //eliminar datos de la tabla
-    pg_query($dbconn, "TRUNCATE ONLY kits RESTART IDENTITY");
+    pg_query($dbconn, "TRUNCATE TABLE kits RESTART IDENTITY");
 
     $start = 0;
     $end = 0;
