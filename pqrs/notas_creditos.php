@@ -46,7 +46,7 @@ if($resultado_cantidad > 0){
                 $direccion_cliente              = str_replace("'", "", $data[$a]["values"]["shipaddress"]);
                 $estado                         = $data[$a]["values"]["statusref"][$y]["text"];
                 $valor                          = $data[$a]["values"]["amount"];
-                $concepto_cliente               = $data[$a]["values"]["custbody_axa_camp_concepcliente"][$y]["text"];
+                $concepto_cliente               = empty($data[$a]["values"]["custbody_axa_camp_concepcliente"]) ? '' : $data[$a]["values"]["custbody_axa_camp_concepcliente"][$y]["text"];
                 $factura_aplicada               = $data[$a]["values"]["appliedtotransaction"][$y]["text"];
 
                 //guardando cabeceras
