@@ -44,7 +44,7 @@ if($resultado_cantidad > 0){
                 $codigo_barras              = $data[$a]["values"]["memberItem.upccode"];
                 $laboratorio                = empty($data[$a]["values"]["department"]) ? : $data[$a]["values"]["department"][$y]["text"];
                 $descripcion                = str_replace("'", "", $data[$a]["values"]["salesdescription"]);
-                $member_item                = $data[$a]["values"]["memberitem"][$y]["text"];
+                $member_item                = str_replace("'", "", $data[$a]["values"]["memberitem"][$y]["text"]);
 
                 //crea
                 $sql_crear_detalle = "INSERT INTO kits (internal_id, nombre_kit, linea, 
