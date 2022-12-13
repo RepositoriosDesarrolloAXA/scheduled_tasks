@@ -43,7 +43,7 @@ if($resultado_cantidad > 0){
                 $linea                      = $data[$a]["values"]["custitem_nso_axa_field_item_linea"];
                 $codigo_barras              = $data[$a]["values"]["memberItem.upccode"];
                 $laboratorio                = empty($data[$a]["values"]["department"]) ? : $data[$a]["values"]["department"][$y]["text"];
-                $descripcion                = $data[$a]["values"]["salesdescription"];
+                $descripcion                = str_replace("'", "", $data[$a]["values"]["salesdescription"]);
                 $member_item                = $data[$a]["values"]["memberitem"][$y]["text"];
 
                 //crea
