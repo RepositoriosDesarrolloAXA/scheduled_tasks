@@ -24,10 +24,7 @@ if($resultado_cantidad > 0){
 
     print($resultado_cantidad."\n");
     //$cantidad_dividir = round($resultado_cantidad / 1000);
-    $cantidad_dividir = $resultado_cantidad % 1000;
-    if ($cantidad_dividir > 0) {
-        $cantidad_dividir += (1000 - $cantidad_dividir);
-    }
+    $cantidad_dividir = ceil($resultado_cantidad/1000)*1000;
     print($cantidad_dividir."<br>");
     // for ($i=0; $i < $cantidad_dividir ; $i++) {
 
