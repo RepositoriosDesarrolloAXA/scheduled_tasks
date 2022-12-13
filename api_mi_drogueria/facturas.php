@@ -43,8 +43,8 @@ if($resultado_cantidad > 0){
                 $documento                  = $data[$a]["values"]["tranid"];
                 $cliente                    = str_replace("'", "", $data[$a]["values"]["custbody_axa_field_nomcliente_fjsr"]);
                 $nit_cliente                = $data[$a]["values"]["custbody_nso_identi_ov"];
-                $vendedor_id                = $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["value"];
-                $vendedor                   = $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["text"];
+                $vendedor_id                = empty($data[$a]["values"]["custbody_nso_vendedor_ffvv"]) ? '' : $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["value"];
+                $vendedor                   = empty($data[$a]["values"]["custbody_nso_vendedor_ffvv"]) ? '' : $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["text"];
                 $clase_id                   = $data[$a]["values"]["class"][$y]["value"];
                 $clase                      = $data[$a]["values"]["class"][$y]["text"];
                 $ubicacion_id               = $data[$a]["values"]["location"][$y]["value"];
@@ -53,7 +53,7 @@ if($resultado_cantidad > 0){
                 $item_id                    = $data[$a]["values"]["item.internalid"][$y]["text"];;
                 $nombre_producto            = str_replace("'", "", $data[$a]["values"]["item.itemid"]);
                 $codigo_barras              = $data[$a]["values"]["item.upccode"];
-                $cantidad                   = $data[$a]["values"]["quantity"];
+                $cantidad                   = empty($data[$a]["values"]["quantity"]) ? 0 : $data[$a]["values"]["quantity"];
                 $laboratorio                = $data[$a]["values"]["item.manufacturer"];
                 $categoria                  = $data[$a]["values"]["item.custitem_nso_axa_field_item_categoria"][$y]["text"];
                 $sub_categoria              = $data[$a]["values"]["item.custitem_nso_axa_field_item_subcat"][$y]["text"];
