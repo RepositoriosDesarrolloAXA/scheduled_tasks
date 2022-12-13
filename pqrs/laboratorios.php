@@ -38,7 +38,7 @@ if($resultado_cantidad > 0){
 
                 $y=0;
 
-                $internal_id                = $data[$a]["values"]["GROUP(CUSTITEM_AXA_VENDORMANUFACTURER_PJCL.internalid)"][$y]["text"];
+                $internal_id                = empty($data[$a]["values"]["GROUP(CUSTITEM_AXA_VENDORMANUFACTURER_PJCL.internalid)"]) ? $data[$a]["values"]["GROUP(CUSTITEM_AXA_VENDORMANUFACTURER_PJCL.internalid)"][$y]["text"] : '';
                 $nit                        = $data[$a]["values"]["GROUP(custitem_axa_vendormanufacturer_pjcl)"][$y]["text"];
                 $laboratorio                = $data[$a]["values"]["GROUP(manufacturer)"];
                 $linea                      = $data[$a]["values"]["GROUP(custitem_nso_axa_field_item_linea)"];
