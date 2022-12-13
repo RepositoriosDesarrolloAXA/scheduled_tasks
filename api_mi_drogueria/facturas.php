@@ -41,7 +41,7 @@ if($resultado_cantidad > 0){
 
                 $id_interno                 = $data[$a]["id"];
                 $documento                  = $data[$a]["values"]["tranid"];
-                $cliente                    = $data[$a]["values"]["custbody_axa_field_nomcliente_fjsr"];
+                $cliente                    = str_replace("'", "", $data[$a]["values"]["custbody_axa_field_nomcliente_fjsr"]);
                 $nit_cliente                = $data[$a]["values"]["custbody_nso_identi_ov"];
                 $vendedor_id                = $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["value"];
                 $vendedor                   = $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["text"];
