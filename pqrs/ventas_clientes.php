@@ -58,12 +58,12 @@ if($resultado_cantidad > 0){
                 $vendedor                                       = $data[$a]["values"]["custbody_nso_vendedor_ffvv"][$y]["text"];
                 $nit_caeventa                                   = $data[$a]["values"]["CUSTBODY_AXA_CAMP_VENDE_WF.custentity_nslc_num_identificacion"];
                 $caeventa                                       = str_replace("'", "", $data[$a]["values"]["custbody_axa_camp_vende_wf"][$y]["text"]);
-                $origen                                         = $data[$a]["values"]["source"][$y]["text"];
+                $origen                                         = empty($data[$a]["values"]["source"]) ? '' : $data[$a]["values"]["source"][$y]["text"];
                 $tipo_origen                                    = $data[$a]["values"]["custbody_nso_ov_type"][$y]["text"];
                 $periodo                                        = $data[$a]["values"]["postingperiod"][$y]["text"];
                 $fecha                                          = $data[$a]["values"]["trandate"];
                 $codigo_barras_item                             = $data[$a]["values"]["item.upccode"];
-                $atem                                           = str_replace("'", "", $data[$a]["values"]["item"][$y]["text"]);
+                $item                                           = str_replace("'", "", $data[$a]["values"]["item"][$y]["text"]);
                 $linea_item                                     = empty($data[$a]["values"]["item.custitem_nso_axa_field_item_linea"]) ? 0 : $data[$a]["values"]["item.custitem_nso_axa_field_item_linea"];
                 $embalaje_item                                  = empty($data[$a]["values"]["item.custitem_nso_axa_field_item_fromalm"]) ? 0 : $data[$a]["values"]["item.custitem_nso_axa_field_item_fromalm"];
                 $cantidad_vendidad_item                         = empty($data[$a]["values"]["quantity"]) ? 0 : $data[$a]["values"]["quantity"];
