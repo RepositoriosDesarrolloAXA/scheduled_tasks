@@ -19,7 +19,7 @@ if($resultado_cantidad > 0){
     $end = 0;
     $cantidad_busqueda = 0;
 
-    $cantidad_dividir = round($resultado_cantidad / 1000);
+    $cantidad_dividir = ceil($resultado_cantidad/1000)*1000;
     for ($i=0; $i < $cantidad_dividir ; $i++) {
 
         $start = ($i == 0) ? 0 : $start + 1000;
