@@ -51,7 +51,7 @@ if($resultado_cantidad > 0){
                 $ubicacion                  = $data[$a]["values"]["location"][$y]["text"];
 
                 $item_id                    = $data[$a]["values"]["item.internalid"][$y]["text"];;
-                $nombre_producto            = $data[$a]["values"]["item.itemid"];
+                $nombre_producto            = str_replace("'", "", $data[$a]["values"]["item.itemid"]);
                 $codigo_barras              = $data[$a]["values"]["item.upccode"];
                 $cantidad                   = $data[$a]["values"]["quantity"];
                 $laboratorio                = $data[$a]["values"]["item.manufacturer"];
