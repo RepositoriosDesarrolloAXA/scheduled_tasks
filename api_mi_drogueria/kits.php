@@ -23,56 +23,60 @@ if($resultado_cantidad > 0){
     $cantidad_busqueda = 0;
 
     print($resultado_cantidad."\n");
-    $cantidad_dividir = round($resultado_cantidad / 1000);
-    print($cantidad_dividir."<br>");
-    for ($i=0; $i < $cantidad_dividir ; $i++) {
-
-        $start = ($i == 0) ? 0 : $start + 1000;
-        $end = $end + 1000;
-        $start= str_pad($start, mb_strlen($end), "0", STR_PAD_LEFT); 
-
-        $resultado = conexion_netsuite(2076, null, $start, $end);
-        $data = json_decode($resultado, true);
-
-        $cantidad_busqueda = $cantidad_busqueda + count($data);
-
-        $informacion = array();
-
-        if(!empty($data)){
-            for($a=0; $a<count($data); $a++){
-
-                $y=0;
-
-                $internal_id                = $data[$a]["values"]["internalid"][$y]["text"];
-                $nombre_kit                 = str_replace("'", "", $data[$a]["values"]["itemid"]);
-                $linea                      = $data[$a]["values"]["custitem_nso_axa_field_item_linea"];
-                $codigo_barras              = $data[$a]["values"]["memberItem.upccode"];
-                $laboratorio                = empty($data[$a]["values"]["department"]) ? : $data[$a]["values"]["department"][$y]["text"];
-                $descripcion                = str_replace("'", "", $data[$a]["values"]["salesdescription"]);
-                $member_item                = str_replace("'", "", $data[$a]["values"]["memberitem"][$y]["text"]);
-
-                //crea
-                $sql_crear_detalle = "INSERT INTO kits (internal_id, nombre_kit, linea, 
-                codigo_barras, laboratorio, descripcion, member_item, created_at) 
-                VALUES('$internal_id', '$nombre_kit', '$linea', '$codigo_barras', '$laboratorio', 
-                '$descripcion', '$member_item', CURRENT_TIMESTAMP)";
-                pg_query( $dbconn, $sql_crear_detalle );
-
-                $valores_creados++;
-
-            }
-
-        }
-
+    //$cantidad_dividir = round($resultado_cantidad / 1000);
+    $cantidad_dividir = $resultado_cantidad % 1000;
+    if ($cantidad_dividir > 0) {
+        $cantidad_dividir += (1000 - $cantidad_dividir);
     }
+    print($cantidad_dividir."<br>");
+    // for ($i=0; $i < $cantidad_dividir ; $i++) {
 
-    $fecha_fin_log = Date('Y-m-d\TH:i:s');
-    $tiempo_fin = microtime_float();
-    $tiempo_a = $tiempo_fin - $tiempo_inicio;
-    $tiempo = $tiempo_a / 60;
+    //     $start = ($i == 0) ? 0 : $start + 1000;
+    //     $end = $end + 1000;
+    //     $start= str_pad($start, mb_strlen($end), "0", STR_PAD_LEFT); 
 
-    generarLog($dbconn, "kits", $cantidad_busqueda, $valores_creados, $valores_actualizados, $fecha_LOG, $fecha_inicio_log, 
-    $fecha_fin_log, $tiempo, "CURRENT_TIMESTAMP");
+    //     $resultado = conexion_netsuite(2076, null, $start, $end);
+    //     $data = json_decode($resultado, true);
+
+    //     $cantidad_busqueda = $cantidad_busqueda + count($data);
+
+    //     $informacion = array();
+
+    //     if(!empty($data)){
+    //         for($a=0; $a<count($data); $a++){
+
+    //             $y=0;
+
+    //             $internal_id                = $data[$a]["values"]["internalid"][$y]["text"];
+    //             $nombre_kit                 = str_replace("'", "", $data[$a]["values"]["itemid"]);
+    //             $linea                      = $data[$a]["values"]["custitem_nso_axa_field_item_linea"];
+    //             $codigo_barras              = $data[$a]["values"]["memberItem.upccode"];
+    //             $laboratorio                = empty($data[$a]["values"]["department"]) ? : $data[$a]["values"]["department"][$y]["text"];
+    //             $descripcion                = str_replace("'", "", $data[$a]["values"]["salesdescription"]);
+    //             $member_item                = str_replace("'", "", $data[$a]["values"]["memberitem"][$y]["text"]);
+
+    //             //crea
+    //             $sql_crear_detalle = "INSERT INTO kits (internal_id, nombre_kit, linea, 
+    //             codigo_barras, laboratorio, descripcion, member_item, created_at) 
+    //             VALUES('$internal_id', '$nombre_kit', '$linea', '$codigo_barras', '$laboratorio', 
+    //             '$descripcion', '$member_item', CURRENT_TIMESTAMP)";
+    //             pg_query( $dbconn, $sql_crear_detalle );
+
+    //             $valores_creados++;
+
+    //         }
+
+    //     }
+
+    // }
+
+    // $fecha_fin_log = Date('Y-m-d\TH:i:s');
+    // $tiempo_fin = microtime_float();
+    // $tiempo_a = $tiempo_fin - $tiempo_inicio;
+    // $tiempo = $tiempo_a / 60;
+
+    // generarLog($dbconn, "kits", $cantidad_busqueda, $valores_creados, $valores_actualizados, $fecha_LOG, $fecha_inicio_log, 
+    // $fecha_fin_log, $tiempo, "CURRENT_TIMESTAMP");
 
     print("Actualización 'kits' finalizada");
 
