@@ -43,65 +43,64 @@ if($resultado_cantidad > 0){
                 $laboratorio                = $data[$a]["values"]["GROUP(manufacturer)"];
                 $linea                      = $data[$a]["values"]["GROUP(custitem_nso_axa_field_item_linea)"];
 
-                $informacion[] = "($item_id, '$nombre', $ubicacion_id, '$ean', $disponible, CURRENT_TIMESTAMP)";
+                //guardando cabeceras
+                if(!empty($internal_id)){
 
-            }
-
-            //guardando cabeceras
-            if(!empty($internal_id)){
-
-                $sql_validar_cabecera = "SELECT id FROM laboratorios WHERE internal_id = '".$internal_id."'";
-                $result1 = pg_query( $dbconn, $sql_validar_cabecera );
-                if (pg_num_rows($result1) > 0){
-                    
-                    //actualiza
-                    $sql_actualizar_cabecera = "UPDATE laboratorios SET 
-                        internal_id = '$internal_id', 
-                        nit = '$nit', 
-                        nombre = '$laboratorio',
-                        updated_at = CURRENT_TIMESTAMP 
-                    WHERE internal_id = '".$internal_id."'";
-                    pg_query( $dbconn, $sql_actualizar_cabecera );
-
-                } else {
-
-                    //crea
-                    $sql_crear_cabecera = "INSERT INTO laboratorios (internal_id, nit, nombre, created_at) 
-                    VALUES($internal_id, '$nit', '$laboratorio', CURRENT_TIMESTAMP)";
-                    pg_query( $dbconn, $sql_crear_cabecera );
-
-                }
-
-                //guardando detalles
-                $sql_validar_detalle = "SELECT id FROM lineas WHERE laboratorio_id = '".$internal_id."' 
-                AND nombre = '".$linea."'";
-                $result2 = pg_query( $dbconn, $sql_validar_detalle );
-                if ($result2) {
-                    if (pg_num_rows($result2) > 0){
-                    
+                    $sql_validar_cabecera = "SELECT id FROM laboratorios WHERE internal_id = '".$internal_id."'";
+                    $result1 = pg_query( $dbconn, $sql_validar_cabecera );
+                    if (pg_num_rows($result1) > 0){
+                        
                         //actualiza
-                        $sql_actualizar_detalle = "UPDATE lineas SET 
-                            laboratorio_id = '$internal_id', 
-                            nombre = '$linea', 
+                        $sql_actualizar_cabecera = "UPDATE laboratorios SET 
+                            internal_id = '$internal_id', 
+                            nit = '$nit', 
+                            nombre = '$laboratorio',
                             updated_at = CURRENT_TIMESTAMP 
-                        WHERE laboratorio_id = '".$internal_id."' AND nombre = '".$linea."'";
-                        pg_query( $dbconn, $sql_actualizar_detalle );
-    
-                        $valores_actualizados++;
-    
+                        WHERE internal_id = '".$internal_id."'";
+                        pg_query( $dbconn, $sql_actualizar_cabecera );
+
                     } else {
-    
+
                         //crea
-                        $sql_crear_detalle = "INSERT INTO lineas (laboratorio_id, nombre, created_at) 
-                        VALUES('$internal_id', '$linea', CURRENT_TIMESTAMP)";
-                        pg_query( $dbconn, $sql_crear_detalle );
-    
-                        $valores_creados++;
-    
-                    }    
+                        $sql_crear_cabecera = "INSERT INTO laboratorios (internal_id, nit, nombre, created_at) 
+                        VALUES($internal_id, '$nit', '$laboratorio', CURRENT_TIMESTAMP)";
+                        pg_query( $dbconn, $sql_crear_cabecera );
+
+                    }
+
+                    //guardando detalles
+                    $sql_validar_detalle = "SELECT id FROM lineas WHERE laboratorio_id = '".$internal_id."' 
+                    AND nombre = '".$linea."'";
+                    $result2 = pg_query( $dbconn, $sql_validar_detalle );
+                    if ($result2) {
+                        if (pg_num_rows($result2) > 0){
+                        
+                            //actualiza
+                            $sql_actualizar_detalle = "UPDATE lineas SET 
+                                laboratorio_id = '$internal_id', 
+                                nombre = '$linea', 
+                                updated_at = CURRENT_TIMESTAMP 
+                            WHERE laboratorio_id = '".$internal_id."' AND nombre = '".$linea."'";
+                            pg_query( $dbconn, $sql_actualizar_detalle );
+        
+                            $valores_actualizados++;
+        
+                        } else {
+        
+                            //crea
+                            $sql_crear_detalle = "INSERT INTO lineas (laboratorio_id, nombre, created_at) 
+                            VALUES('$internal_id', '$linea', CURRENT_TIMESTAMP)";
+                            pg_query( $dbconn, $sql_crear_detalle );
+        
+                            $valores_creados++;
+        
+                        }    
+                    }
+
                 }
 
             }
+
         }
 
     }
