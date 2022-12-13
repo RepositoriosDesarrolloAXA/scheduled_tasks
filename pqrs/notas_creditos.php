@@ -70,6 +70,7 @@ if($resultado_cantidad > 0){
                             factura_aplicada = '$factura_aplicada',
                             updated_at = CURRENT_TIMESTAMP 
                         WHERE internal_id = '".$internal_id."' AND numero = '".$numero."'";
+                        $valores_actualizados++;
 
                     } else {
 
@@ -78,6 +79,7 @@ if($resultado_cantidad > 0){
                         direccion_cliente, estado, valor, concepto_cliente, factura_aplicada, created_at) 
                         VALUES('$internal_id', '$numero', '$fecha_creacion', '$nit_cliente', '$nombre_cliente', '$direccion_cliente', 
                         '$estado', $valor, '$concepto_cliente', '$factura_aplicada', CURRENT_TIMESTAMP)";
+                        $valores_creados++;
 
                     }
 
