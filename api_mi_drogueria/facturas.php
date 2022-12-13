@@ -62,7 +62,7 @@ if($resultado_cantidad > 0){
                 $descuento                  = $data[$a]["values"]["discountamount"];
                 $porcentaje_iva             = $data[$a]["values"]["item.custitem_ks_tarifa_de_iva"][$y]["text"];
                 $total_iva                  = $data[$a]["values"]["taxamount"];
-                $type                       = $data[$a]["values"]["item.type"][$y]["text"];
+                $type                       = empty($data[$a]["values"]["item.type"]) ? '' : $data[$a]["values"]["item.type"][$y]["text"];
                 $lote                       = $data[$a]["values"]["serialnumber"];
                 $fecha_vencimiento          = $data[$a]["values"]["inventoryDetail.expirationdate"];
 
