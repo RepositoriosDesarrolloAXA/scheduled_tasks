@@ -1,8 +1,8 @@
 <?php 
 
-require_once(realpath('/var/www/html/extracciones/toma_pedido/conexion.php')); // base de datos
-require_once(realpath('/var/www/html/extracciones/toma_pedido/funtions.php')); // funciones
-require_once(realpath('/var/www/html/extracciones/toma_pedido/netsuite.php')); // funciones
+require_once(realpath('/var/www/scheduled_tasks/toma_pedido/conexion.php')); // base de datos
+require_once(realpath('/var/www/scheduled_tasks/toma_pedido/funtions.php')); // funciones
+require_once(realpath('/var/www/scheduled_tasks/toma_pedido/netsuite.php')); // funciones
 
 //tiempo
 date_default_timezone_set('America/Bogota');
