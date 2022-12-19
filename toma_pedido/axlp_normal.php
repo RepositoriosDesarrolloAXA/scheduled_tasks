@@ -13,7 +13,7 @@ header('Content-type: text/plain; charset=UTF-8');
     $control = 0;
     $inicio=0;
     $start=0;
-    $end=1;
+    $end=1000;
     $valores_creados = 0;
     $valores_actualizados = 0;
     $cantidad_registros = 0;
@@ -130,14 +130,17 @@ header('Content-type: text/plain; charset=UTF-8');
                 $tipo                               = $data[$i]["values"]["formulatext_4"];
             	$estado_articulo				    = $data[$i]["values"]["CUSTRECORD_AXLP_NSO_PRECIO_ITEM.isinactive"];
 
+                $unidad_venta_inst				    = empty($data[$i]["values"]["CUSTRECORD_AXLP_ITEM.custitem_nso_axa_field_item_unvtainst"]) ? 0 : $data[$i]["values"]["CUSTRECORD_AXLP_ITEM.custitem_nso_axa_field_item_unvtainst"];
+                $precio_item_id				        = $data[$i]["values"]["formulatext_7"];
+
                 if($aplica_transferencia == true){
-                    $aplica_transferencia = 'S�';
+                    $aplica_transferencia = 'Sí';
                 } else {
                     $aplica_transferencia = 'No';
                 }
 
                 if($controlado == true){
-                    $controlado = 'S�';
+                    $controlado = 'Sí';
                 } else {
                     $controlado = 'No';
                 }
@@ -150,76 +153,80 @@ header('Content-type: text/plain; charset=UTF-8');
 
 				$fecha_insertar = Date('Y-m-d\TH:i:s');
 
-                $sql1_validar = "SELECT id FROM axlp WHERE id = '".$id."'";
-                $result1 = pg_query( $dbconn, $sql1_validar );
-                if (pg_num_rows($result1) > 0){
+                if(!empty($id)){
+                    $sql1_validar = "SELECT id FROM axlp WHERE id = '".$id."'";
+                    $result1 = pg_query( $dbconn_principal, $sql1_validar );
+                    if (pg_num_rows($result1) > 0){
 
-                    //actualiza
-                    $sql1 = "UPDATE axlp SET 
-                        id = $id, 
-                        item_id = $item_id, 
-                        lista_id = $lista_id, 
-                        ubicacion_id = $ubicacion_id, 
-                        teleferia_id = $teleferia_id, 
-                        centro_costo_id = $centro_costo_id, 
-                        fecha_promocion_axa = $fecha_promocion_axa, 
-                        porciento_promocion_axa = $porciento_promocion_axa, 
-                        fecha_incial_teleferia = $fecha_incial_teleferia, 
-                        fecha_final_teleferia = $fecha_final_teleferia, 
-                        porciento_teleferia = $porciento_teleferia, 
-                        contado_sin_teleferia = $contado_sin_teleferia, 
-                        credito_sin_teleferia = $credito_sin_teleferia, 
-                        contado_teleferia = $contado_teleferia, 
-                        credito_teleferia = $credito_teleferia, 
-                        aplica_transferencia = '$aplica_transferencia', 
-                        linea = '$linea', 
-                        mp_credito = $mp_credito, 
-                        mp_contado = $mp_contado, 
-                        ean = '$ean', 
-                        generico = '$generico', 
-                        nombre_item = '$nombre_item', 
-                        precio_max_venta = $precio_max_venta, 
-                        controlado = '$controlado', 
-                        iva = $iva, 
-                        embalaje = '$embalaje', 
-                        tipo_articulo = '$tipo_articulo', 
-                        tipo = '$tipo', 
-                        isinactive = '$estado_articulo', 
-                        updated_at = '$fecha_insertar'
-                        WHERE id = '".$id."'";
+                        //actualiza
+                        $sql1 = "UPDATE axlp SET 
+                            id = $id, 
+                            item_id = $item_id, 
+                            lista_id = $lista_id, 
+                            ubicacion_id = $ubicacion_id, 
+                            teleferia_id = $teleferia_id, 
+                            centro_costo_id = $centro_costo_id, 
+                            fecha_promocion_axa = $fecha_promocion_axa, 
+                            porciento_promocion_axa = $porciento_promocion_axa, 
+                            fecha_incial_teleferia = $fecha_incial_teleferia, 
+                            fecha_final_teleferia = $fecha_final_teleferia, 
+                            porciento_teleferia = $porciento_teleferia, 
+                            contado_sin_teleferia = $contado_sin_teleferia, 
+                            credito_sin_teleferia = $credito_sin_teleferia, 
+                            contado_teleferia = $contado_teleferia, 
+                            credito_teleferia = $credito_teleferia, 
+                            aplica_transferencia = '$aplica_transferencia', 
+                            linea = '$linea', 
+                            mp_credito = $mp_credito, 
+                            mp_contado = $mp_contado, 
+                            ean = '$ean', 
+                            generico = '$generico', 
+                            nombre_item = '$nombre_item', 
+                            precio_max_venta = $precio_max_venta, 
+                            controlado = '$controlado', 
+                            iva = $iva, 
+                            embalaje = '$embalaje', 
+                            tipo_articulo = '$tipo_articulo', 
+                            tipo = '$tipo', 
+                            isinactive = '$estado_articulo', 
+                            unidad_venta_inst = $unidad_venta_inst, 
+                            precio_item_id = $precio_item_id, 
+                            updated_at = '$fecha_insertar'
+                            WHERE id = '".$id."'";
 
-                    $valores_actualizados++;
+                        $valores_actualizados++;
 
+                    } else {
+
+                        //creaciÃ³n
+                        $sql1 = "INSERT INTO axlp 
+                        (id, item_id, lista_id, ubicacion_id, teleferia_id, centro_costo_id, fecha_promocion_axa, porciento_promocion_axa, 
+                        fecha_incial_teleferia, fecha_final_teleferia, 
+                        porciento_teleferia, contado_sin_teleferia, credito_sin_teleferia, contado_teleferia, credito_teleferia, 
+                        aplica_transferencia, linea, mp_credito, mp_contado, ean, generico, nombre_item, precio_max_venta, 
+                        controlado, iva, embalaje, tipo_articulo, tipo, isinactive, unidad_venta_inst, precio_item_id, created_at) 
+                        VALUES ($id, $item_id, $lista_id, $ubicacion_id, $teleferia_id, $centro_costo_id, 
+                        $fecha_promocion_axa, $porciento_promocion_axa, $fecha_incial_teleferia,
+                        $fecha_final_teleferia, $porciento_teleferia, $contado_sin_teleferia, $credito_sin_teleferia, $contado_teleferia, 
+                        $credito_teleferia, '$aplica_transferencia', '$linea', $mp_credito, $mp_contado, '$ean', '$generico', 
+                        '$nombre_item', $precio_max_venta, '$controlado', $iva, '$embalaje', '$tipo_articulo', '$tipo', 
+                        '$estado_articulo', $unidad_venta_inst, $precio_item_id, '$fecha_insertar')";
+
+                        $valores_creados++;
+
+                    }
+
+                    //pg_set_client_encoding($dbconn_pruebas, "UTF8");
+                    $result1_creacion = pg_query( $dbconn_principal, $sql1 );
+                    $errorinsrt1 =  pg_last_error($dbconn_principal);
+                    if (!isset($errorinsrt1)){
+                        var_dump($errorinsrt1);
+                        exit;
+                    } else {
+                        print($errorinsrt1."\n");
+                    }
                 } else {
-
-                    //creación
-                    $sql1 = "INSERT INTO axlp 
-                    (id, item_id, lista_id, ubicacion_id, teleferia_id, centro_costo_id, fecha_promocion_axa, porciento_promocion_axa, 
-                    fecha_incial_teleferia, fecha_final_teleferia, 
-                    porciento_teleferia, contado_sin_teleferia, credito_sin_teleferia, contado_teleferia, credito_teleferia, 
-                    aplica_transferencia, linea, mp_credito, mp_contado, ean, generico, nombre_item, precio_max_venta, 
-                    controlado, iva, embalaje, tipo_articulo, tipo, isinactive, created_at) 
-                    VALUES ($id, $item_id, $lista_id, $ubicacion_id, $teleferia_id, $centro_costo_id, 
-                    $fecha_promocion_axa, $porciento_promocion_axa, $fecha_incial_teleferia,
-                    $fecha_final_teleferia, $porciento_teleferia, $contado_sin_teleferia, $credito_sin_teleferia, $contado_teleferia, 
-                    $credito_teleferia, '$aplica_transferencia', '$linea', $mp_credito, $mp_contado, '$ean', '$generico', 
-                    '$nombre_item', $precio_max_venta, '$controlado', $iva, '$embalaje', '$tipo_articulo', '$tipo', 
-                    '$estado_articulo', '$fecha_insertar')";
-
-                    $valores_creados++;
-
-                }
-
-                //print($sql1 . "\n\n");
-
-            	//pg_set_client_encoding($dbconn, "UTF8");
-                $result1_creacion = pg_query( $dbconn, $sql1 );
-                $errorinsrt1 =  pg_last_error($dbconn);
-                if (!isset($errorinsrt1)){
-                    var_dump($errorinsrt1);
-                    exit;
-                } else {
-                	print($errorinsrt1."\n");
+                    print('Encontre uno sin ID');
                 }
 
             }; // for interno que recorre el arreglo del resultados 
@@ -247,8 +254,8 @@ header('Content-type: text/plain; charset=UTF-8');
         cant_actualizados, fecha, fecha_inicio, fecha_fin, tiempo, created_at) VALUES 
         ('REGISTRO', 'axlp', $cantidad_registros, $valores_creados, $valores_actualizados, 
         '$fecha_LOG', '$fecha_inicio_log', '$fecha_fin_log', '$tiempo', '$fecha_insertar')";
-    $result1_creacion_log = pg_query( $dbconn, $sql_log );
-    $errorinsrt1 =  pg_last_error($dbconn);
+    $result1_creacion_log = pg_query( $dbconn_principal, $sql_log );
+    $errorinsrt1 =  pg_last_error($dbconn_principal);
     if (!isset($errorinsrt1)){
         var_dump($errorinsrt1);
         exit;
