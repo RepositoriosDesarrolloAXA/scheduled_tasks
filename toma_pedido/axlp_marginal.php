@@ -152,7 +152,7 @@ header('Content-type: text/plain; charset=UTF-8');
                 //alidar si existe cliente
 				$fecha_insertar = Date('Y-m-d\TH:i:s');
                 $sql1_validar = "SELECT id FROM axlp_marginal WHERE id = '".$id."'";
-                $result1 = pg_query( $dbconn_principal, $sql1_validar );
+                $result1 = pg_query( $dbconn, $sql1_validar );
                 if (pg_num_rows($result1) > 0){
 
                     //actualiza
@@ -215,8 +215,8 @@ header('Content-type: text/plain; charset=UTF-8');
 
                 //print($sql1 . "\n\n");
 
-            	$result1_creacion = pg_query( $dbconn_principal, $sql1);
-                $errorinsrt1 =  pg_last_error($dbconn_principal);
+            	$result1_creacion = pg_query( $dbconn, $sql1);
+                $errorinsrt1 =  pg_last_error($dbconn);
                 if (!isset($errorinsrt1)){
                     var_dump($errorinsrt1);
                     exit;
@@ -249,8 +249,8 @@ header('Content-type: text/plain; charset=UTF-8');
         cant_actualizados, fecha, fecha_inicio, fecha_fin, tiempo, created_at) VALUES 
         ('REGISTRO', 'axlp_marginal', $cantidad_registros, $valores_creados, $valores_actualizados, 
         '$fecha_LOG', '$fecha_inicio_log', '$fecha_fin_log', '$tiempo', '$fecha_insertar')";
-    $result1_creacion_log = pg_query( $dbconn_principal, $sql_log );
-    $errorinsrt1 =  pg_last_error($dbconn_principal);
+    $result1_creacion_log = pg_query( $dbconn, $sql_log );
+    $errorinsrt1 =  pg_last_error($dbconn);
     if (!isset($errorinsrt1)){
         var_dump($errorinsrt1);
         exit;
