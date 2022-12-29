@@ -22,13 +22,15 @@ if($resultado_cantidad > 0){
     $end = 0;
     $cantidad_busqueda = 0;
 
-    $cantidad_dividir = round($resultado_cantidad / 1000);
+    $cantidad_for = ceil($resultado_cantidad/1000)*1000;
+    $cantidad_dividir = $cantidad_for / 1000;
     for ($i=0; $i < $cantidad_dividir ; $i++) { 
         
         $start = ($i == 0) ? 0 : $start + 1000;
         $end = $end + 1000;
         $start= str_pad($start, mb_strlen($end), "0", STR_PAD_LEFT); 
 
+        print("Start: " . $start . " - End: " . $end . "<br>\n");
 
         $resultado = conexion_netsuite(1309, null, $start, $end);
         $data = json_decode($resultado, true);
